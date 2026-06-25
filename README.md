@@ -1,16 +1,15 @@
-# ninacaterina.github.io
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>IVA — Inner Vital Analytics</title>
+<title>Gender Data Gap — Awareness Station</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --crimson: #8B0000;
-    --crimson-light: #b30000;
+    --green: #5db191;
+    --green-dark: #3d8a6e;
     --black: #1A1A1A;
     --gray-dark: #555;
     --gray-mid: #999;
@@ -19,7 +18,7 @@
     --white: #FFFFFF;
     --radius: 2px;
     --mono: ui-monospace, 'SF Mono', 'Menlo', monospace;
-    --sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    --sans: 'Avenir Next', 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   html, body {
@@ -41,7 +40,7 @@
   }
   #progress-fill {
     height: 100%;
-    background: var(--crimson);
+    background: var(--green);
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     width: 0%;
   }
@@ -57,7 +56,7 @@
     font-family: var(--mono);
     font-size: 13px;
     letter-spacing: 0.2em;
-    color: var(--crimson);
+    color: var(--green);
     font-weight: 400;
   }
   .logo-sub {
@@ -105,7 +104,7 @@
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: 0.2em;
-    color: var(--crimson);
+    color: var(--green);
     text-transform: uppercase;
     margin-bottom: 20px;
   }
@@ -157,7 +156,7 @@
   }
   input[type="text"]:focus,
   input[type="date"]:focus {
-    border-color: var(--crimson);
+    border-color: var(--green);
     background: var(--white);
   }
   input::placeholder { color: var(--gray-mid); }
@@ -206,11 +205,11 @@
   }
 
   .option-card.selected {
-    border-color: var(--crimson);
+    border-color: var(--green);
     background: var(--white);
   }
-  .option-card.selected .option-title { color: var(--crimson); }
-  .option-card.selected .option-icon  { color: var(--crimson); }
+  .option-card.selected .option-title { color: var(--green); }
+  .option-card.selected .option-icon  { color: var(--green); }
 
   /* Age brackets (step 2b) */
   .age-groups {
@@ -233,16 +232,16 @@
     -webkit-tap-highlight-color: transparent;
   }
   .age-btn.selected {
-    border-color: var(--crimson);
+    border-color: var(--green);
     background: var(--white);
-    color: var(--crimson);
+    color: var(--green);
   }
 
   /* Buttons */
   .btn-primary {
     width: 100%;
     padding: 16px;
-    background: var(--crimson);
+    background: var(--green);
     color: var(--white);
     font-family: var(--mono);
     font-size: 12px;
@@ -254,7 +253,7 @@
     transition: background 0.15s;
     -webkit-tap-highlight-color: transparent;
   }
-  .btn-primary:active { background: #6b0000; }
+  .btn-primary:active { background: #3d8a6e; }
   .btn-primary:disabled {
     background: var(--gray-light);
     color: var(--gray-mid);
@@ -297,7 +296,7 @@
     display: block;
     height: 2px;
     background: repeating-linear-gradient(
-      90deg, var(--crimson) 0, var(--crimson) 6px, transparent 6px, transparent 12px
+      90deg, var(--green) 0, var(--green) 6px, transparent 6px, transparent 12px
     );
     margin-bottom: 20px;
   }
@@ -321,7 +320,7 @@
     font-size: 9px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--crimson);
+    color: var(--green);
     display: block;
     margin-bottom: 6px;
   }
@@ -344,14 +343,14 @@
     margin-top: 14px;
     min-height: 20px;
   }
-  #print-status.error { color: var(--crimson); }
+  #print-status.error { color: var(--green); }
   #print-status.ok    { color: #2a7a2a; }
 
   /* Thank you screen */
   #screen-done .done-mark {
     font-family: var(--mono);
     font-size: 48px;
-    color: var(--crimson);
+    color: var(--green);
     display: block;
     margin-bottom: 20px;
   }
@@ -360,7 +359,7 @@
   .hairline {
     width: 32px;
     height: 1px;
-    background: var(--crimson);
+    background: var(--green);
     margin: 20px 0;
   }
 
@@ -375,8 +374,8 @@
 <div id="progress-track"><div id="progress-fill"></div></div>
 
 <header>
-  <span class="logo">IVA</span>
-  <span class="logo-sub">Inner Vital Analytics</span>
+  
+  <span class="logo-sub">Gender Data Gap — Awareness Station</span>
 </header>
 
 <main>
@@ -461,7 +460,7 @@
     <p class="screen-label">Complete</p>
     <h2>Your receipt is printing.</h2>
     <div class="hairline"></div>
-    <p class="screen-desc" style="margin-bottom: 40px;">Thank you for interacting with IVA. The data gap is real — your awareness matters.</p>
+    <p class="screen-desc" style="margin-bottom: 40px;">The gender data gap is real. Your awareness is the first step.</p>
     <button class="btn-primary" onclick="resetAll()">Start over</button>
   </div>
 
@@ -595,7 +594,7 @@ function buildReceipt() {
       <span class="receipt-fact-label">Data point for you</span>
       ${escHtml(fact)}
     </div>
-    <div class="receipt-footer">IVA · Inner Vital Analytics · ${ts}</div>
+    <div class="receipt-footer">Awareness Station · ${ts}</div>
   `;
 }
 
@@ -639,9 +638,9 @@ function buildEscPos() {
     new Uint8Array(ESC_INIT),
     new Uint8Array(ALIGN_C),
     new Uint8Array(BOLD_ON),
-    text('IVA\n'),
+    text('GENDER DATA GAP\n'),
     new Uint8Array(BOLD_OFF),
-    text('Inner Vital Analytics\n'),
+    text('Awareness Station\n'),
     text('--------------------------------\n'),
     new Uint8Array(ALIGN_L),
     text(row('Name', state.name) + '\n'),
