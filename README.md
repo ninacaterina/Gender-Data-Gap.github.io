@@ -448,7 +448,7 @@
     </div>
 
     <button class="btn-primary" id="btn-print" onclick="printReceipt()">
-      ⬡ Connect printer &amp; print
+      ⬡ Connect USB printer &amp; print
     </button>
     <button class="btn-ghost" onclick="goToStep(2)">← Back</button>
     <div id="print-status"></div>
@@ -672,7 +672,7 @@ function buildEscPos() {
     text('--------------------------------\n'),
     new Uint8Array(ALIGN_C),
     text(ts + '\n'),
-    text('iva-diagnostics.github.io\n'),
+    text('ninacaterina.github.io/Gender-Data-Gap\n'),
     text('\n\n\n'),
     new Uint8Array(CUT)
   );
@@ -684,47 +684,56 @@ function buildEscPos() {
   return out;
 }
 
-// ── Bluetooth print ────────────────────────────────────────────────────────
+// ── WebUSB print (AnJet58 / generic ESC/POS USB) ───────────────────────────
+let usbDevice = null;
+
 async function printReceipt() {
   const status = document.getElementById('print-status');
-  const btn = document.getElementById('btn-print');
+  const btn    = document.getElementById('btn-print');
 
-  // Common ESC/POS printer service UUID
-  const SERVICE_UUID = '000018f0-0000-1000-8000-00805f9b34fb';
-  const CHAR_UUID    = '00002af1-0000-1000-8000-00805f9b34fb';
-
-  if (!navigator.bluetooth) {
+  if (!navigator.usb) {
     status.className = 'error';
-    status.textContent = 'Bluetooth not available — open this page in Safari on iPad.';
+    status.textContent = 'WebUSB not available — open this page in Chrome or Edge on your laptop.';
     return;
   }
 
   btn.disabled = true;
   status.className = '';
-  status.textContent = 'Searching for printer…';
 
   try {
-    const device = await navigator.bluetooth.requestDevice({
-      filters: [{ services: [SERVICE_UUID] }],
-      optionalServices: [SERVICE_UUID]
-    });
+    // Ask user to pick the printer if not already paired
+    if (!usbDevice || !usbDevice.opened) {
+      status.textContent = 'Select your AnJet58 printer in the popup…';
+      usbDevice = await navigator.usb.requestDevice({
+        filters: [] // show all USB devices — select the AnJet58 from the list
+      });
+    }
 
     status.textContent = 'Connecting…';
-    const server  = await device.gatt.connect();
-    const service = await server.getPrimaryService(SERVICE_UUID);
-    const char    = await service.getCharacteristic(CHAR_UUID);
+    if (!usbDevice.opened) await usbDevice.open();
+
+    // Select configuration and claim interface
+    if (usbDevice.configuration === null) await usbDevice.selectConfiguration(1);
+    await usbDevice.claimInterface(0);
+
+    // Find the bulk-out endpoint (where we send print data)
+    const iface = usbDevice.configuration.interfaces[0];
+    const altIface = iface.alternates[0];
+    const endpoint = altIface.endpoints.find(e => e.direction === 'out' && e.type === 'bulk');
+
+    if (!endpoint) throw new Error('No bulk-out endpoint found on this printer.');
 
     status.textContent = 'Printing…';
     const data = buildEscPos();
 
-    // Send in 512-byte chunks (BLE MTU limit)
-    const chunkSize = 512;
+    // Send in chunks
+    const chunkSize = 64;
     for (let i = 0; i < data.length; i += chunkSize) {
-      await char.writeValueWithoutResponse(data.slice(i, i + chunkSize));
-      await new Promise(r => setTimeout(r, 40));
+      await usbDevice.transferOut(endpoint.endpointNumber, data.slice(i, i + chunkSize));
+      await new Promise(r => setTimeout(r, 20));
     }
 
-    device.gatt.disconnect();
+    await usbDevice.releaseInterface(0);
     status.className = 'ok';
     status.textContent = '✓ Sent to printer.';
     setTimeout(() => goToStep(4), 1200);
@@ -732,10 +741,10 @@ async function printReceipt() {
   } catch (err) {
     btn.disabled = false;
     status.className = 'error';
-    if (err.name === 'NotFoundError') {
-      status.textContent = 'No printer found. Make sure it is on and in range.';
-    } else if (err.name === 'SecurityError') {
-      status.textContent = 'Bluetooth blocked. Open this page via HTTPS.';
+    if (err.name === 'NotFoundError' || err.name === 'AbortError') {
+      status.textContent = 'No printer selected. Try again and pick the AnJet58 from the list.';
+    } else if (err.message.includes('Access denied') || err.name === 'SecurityError') {
+      status.textContent = 'USB access denied — make sure you\'re on HTTPS or localhost.';
     } else {
       status.textContent = 'Error: ' + err.message;
     }
