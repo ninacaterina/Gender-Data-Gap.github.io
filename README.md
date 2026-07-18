@@ -22,7 +22,7 @@
   }
 
   html, body {
-    height: 100%;
+    min-height: 100%;
     background: var(--white);
     color: var(--black);
     font-family: var(--sans);
@@ -47,33 +47,14 @@
 
   /* Header */
   header {
-    padding: 40px 40px 0;
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
-  .logo {
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    color: var(--green);
-    font-weight: 400;
+    padding: 36px 40px 0;
   }
   .logo-sub {
     font-family: var(--mono);
     font-size: 11px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--gray-mid);
     text-transform: uppercase;
-  }
-
-  /* Step counter */
-  .step-counter {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--gray-mid);
-    margin-top: 6px;
   }
 
   /* Main layout */
@@ -83,51 +64,51 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 40px 60px;
+    padding: 60px 40px 60px;
   }
 
-  /* Screen (each step) */
+  /* Screen */
   .screen {
     display: none;
     width: 100%;
-    max-width: 460px;
-    animation: fadeUp 0.35s ease both;
+    max-width: 480px;
+    animation: fadeUp 0.3s ease both;
   }
   .screen.active { display: block; }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
   .screen-label {
     font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
     color: var(--green);
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
 
   .screen h2 {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 300;
-    line-height: 1.2;
+    line-height: 1.25;
     letter-spacing: -0.02em;
     color: var(--black);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .screen-desc {
     font-size: 14px;
     color: var(--gray-dark);
     line-height: 1.6;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
     font-weight: 300;
   }
 
   /* Inputs */
-  .field-group { margin-bottom: 28px; }
+  .field-group { margin-bottom: 24px; }
 
   label.field-label {
     display: block;
@@ -161,81 +142,48 @@
   }
   input::placeholder { color: var(--gray-mid); }
 
-  /* Selection cards */
-  .options-grid {
+  /* Category grid */
+  .cat-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 40px;
+    gap: 10px;
+    margin-bottom: 32px;
   }
 
-  .option-card {
-    padding: 20px 16px;
+  .cat-card {
+    padding: 16px 14px;
     background: var(--gray-bg);
     border: 1px solid var(--gray-light);
     border-radius: var(--radius);
     cursor: pointer;
     transition: border-color 0.15s, background 0.15s;
-    text-align: left;
-    user-select: none;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
-  .option-card:active { transform: scale(0.98); }
+  .cat-card:active { transform: scale(0.98); }
 
-  .option-card .option-icon {
+  .cat-card .cat-num {
     font-family: var(--mono);
-    font-size: 22px;
-    display: block;
-    margin-bottom: 8px;
-    color: var(--gray-dark);
-  }
-  .option-card .option-title {
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--black);
-    display: block;
-    margin-bottom: 4px;
-  }
-  .option-card .option-sub {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
+    font-size: 9px;
+    letter-spacing: 0.15em;
     color: var(--gray-mid);
     display: block;
+    margin-bottom: 6px;
   }
-
-  .option-card.selected {
-    border-color: var(--green);
-    background: var(--white);
-  }
-  .option-card.selected .option-title { color: var(--green); }
-  .option-card.selected .option-icon  { color: var(--green); }
-
-  /* Age brackets (step 2b) */
-  .age-groups {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  .age-btn {
-    padding: 14px 8px;
-    background: var(--gray-bg);
-    border: 1px solid var(--gray-light);
-    border-radius: var(--radius);
-    font-family: var(--mono);
-    font-size: 12px;
+  .cat-card .cat-title {
+    font-size: 13px;
+    font-weight: 400;
     color: var(--black);
-    cursor: pointer;
-    text-align: center;
-    transition: border-color 0.15s, background 0.15s;
-    -webkit-tap-highlight-color: transparent;
+    line-height: 1.35;
+    display: block;
   }
-  .age-btn.selected {
+
+  .cat-card.selected {
     border-color: var(--green);
     background: var(--white);
-    color: var(--green);
   }
+  .cat-card.selected .cat-title { color: var(--green); }
+  .cat-card.selected .cat-num   { color: var(--green); }
 
   /* Buttons */
   .btn-primary {
@@ -244,7 +192,7 @@
     background: var(--green);
     color: var(--white);
     font-family: var(--mono);
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     border: none;
@@ -253,7 +201,7 @@
     transition: background 0.15s;
     -webkit-tap-highlight-color: transparent;
   }
-  .btn-primary:active { background: #3d8a6e; }
+  .btn-primary:active { background: var(--green-dark); }
   .btn-primary:disabled {
     background: var(--gray-light);
     color: var(--gray-mid);
@@ -262,11 +210,11 @@
 
   .btn-ghost {
     width: 100%;
-    padding: 14px;
+    padding: 13px;
     background: transparent;
     color: var(--gray-mid);
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     border: 1px solid var(--gray-light);
@@ -282,14 +230,12 @@
     background: var(--white);
     border: 1px solid var(--gray-light);
     border-radius: var(--radius);
-    padding: 28px 24px;
-    margin-bottom: 28px;
+    padding: 24px 22px;
+    margin-bottom: 24px;
     font-family: var(--mono);
-    font-size: 12px;
-    line-height: 1.8;
+    font-size: 11.5px;
+    line-height: 1.85;
     color: var(--black);
-    position: relative;
-    overflow: hidden;
   }
   .receipt-preview::before {
     content: '';
@@ -298,39 +244,39 @@
     background: repeating-linear-gradient(
       90deg, var(--green) 0, var(--green) 6px, transparent 6px, transparent 12px
     );
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
-  .receipt-line { display: flex; justify-content: space-between; gap: 12px; }
-  .receipt-line .rl { color: var(--gray-mid); }
-  .receipt-line .rv { font-weight: 400; text-align: right; }
+  .receipt-line { display: flex; justify-content: space-between; gap: 8px; }
+  .receipt-line .rl { color: var(--gray-mid); white-space: nowrap; }
+  .receipt-line .rv { text-align: right; }
   .receipt-divider {
     border: none;
     border-top: 1px dashed var(--gray-light);
-    margin: 12px 0;
+    margin: 10px 0;
   }
-  .receipt-fact {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px dashed var(--gray-light);
-    font-size: 10px;
-    line-height: 1.7;
-    color: var(--gray-dark);
-  }
-  .receipt-fact-label {
+  .receipt-cat-label {
     font-size: 9px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--green);
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    margin-top: 14px;
+  }
+  .receipt-fact-text {
+    font-size: 11px;
+    line-height: 1.75;
+    color: var(--black);
   }
   .receipt-footer {
-    margin-top: 16px;
+    margin-top: 14px;
     font-size: 9px;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--gray-mid);
     text-align: center;
+    padding-top: 12px;
+    border-top: 1px dashed var(--gray-light);
   }
 
   /* Print status */
@@ -340,27 +286,25 @@
     letter-spacing: 0.1em;
     color: var(--gray-mid);
     text-align: center;
-    margin-top: 14px;
+    margin-top: 12px;
     min-height: 20px;
   }
-  #print-status.error { color: var(--green); }
-  #print-status.ok    { color: #2a7a2a; }
+  #print-status.error { color: #b30000; }
+  #print-status.ok    { color: var(--green-dark); }
 
-  /* Thank you screen */
+  /* Done screen */
   #screen-done .done-mark {
     font-family: var(--mono);
-    font-size: 48px;
+    font-size: 44px;
     color: var(--green);
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
-
-  /* Divider line */
   .hairline {
-    width: 32px;
+    width: 28px;
     height: 1px;
     background: var(--green);
-    margin: 20px 0;
+    margin: 18px 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -374,81 +318,54 @@
 <div id="progress-track"><div id="progress-fill"></div></div>
 
 <header>
-  
   <span class="logo-sub">Gender Data Gap — Awareness Station</span>
 </header>
 
 <main>
 
-  <!-- Step 1: Name -->
+  <!-- Step 1: Name + Birthday -->
   <div class="screen active" id="screen-name">
-    <p class="screen-label">01 / 03 — Identification</p>
-    <h2>What is your name?</h2>
-    <p class="screen-desc">Your name will appear on your personalised data receipt.</p>
+    <p class="screen-label">01 / 02 — Who are you?</p>
+    <h2>Let's personalise<br>your receipt.</h2>
+    <p class="screen-desc">Tell us your name and birthday — both are optional. Skip either by leaving it blank.</p>
+
     <div class="field-group">
       <label class="field-label" for="input-name">First name</label>
-      <input type="text" id="input-name" placeholder="Enter your name" autocomplete="off" autocorrect="off" spellcheck="false">
+      <input type="text" id="input-name" placeholder="Your name" autocomplete="off" autocorrect="off" spellcheck="false">
     </div>
-    <button class="btn-primary" id="btn-name-next" onclick="goToStep2()" disabled>Continue</button>
-  </div>
-
-  <!-- Step 2: Birthday + biological context -->
-  <div class="screen" id="screen-bio">
-    <p class="screen-label">02 / 03 — Biological context</p>
-    <h2>Tell us a bit more.</h2>
-    <p class="screen-desc">This helps us generate accurate contextual health data for your receipt.</p>
 
     <div class="field-group">
       <label class="field-label" for="input-dob">Date of birth</label>
       <input type="date" id="input-dob" max="">
     </div>
 
-    <div class="field-group">
-      <label class="field-label">Biological sex</label>
-      <div class="options-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 0;">
-        <div class="option-card" onclick="selectSex(this, 'female')">
-          <span class="option-icon">♀</span>
-          <span class="option-title">Female</span>
-        </div>
-        <div class="option-card" onclick="selectSex(this, 'male')">
-          <span class="option-icon">♂</span>
-          <span class="option-title">Male</span>
-        </div>
-        <div class="option-card" onclick="selectSex(this, 'other')">
-          <span class="option-icon">⚧</span>
-          <span class="option-title">Other</span>
-        </div>
-      </div>
+    <button class="btn-primary" onclick="goToStep(2)">Continue</button>
+  </div>
+
+  <!-- Step 2: Category selection -->
+  <div class="screen" id="screen-category">
+    <p class="screen-label">02 / 02 — Choose a topic</p>
+    <h2>What do you want<br>to know more about?</h2>
+    <p class="screen-desc">Select one area where the gender data gap shows.</p>
+
+    <div class="cat-grid" id="cat-grid">
+      <!-- filled by JS -->
     </div>
 
-    <div class="field-group">
-      <label class="field-label">Age group</label>
-      <div class="age-groups">
-        <button class="age-btn" onclick="selectAge(this, '13–17')">13–17</button>
-        <button class="age-btn" onclick="selectAge(this, '18–29')">18–29</button>
-        <button class="age-btn" onclick="selectAge(this, '30–44')">30–44</button>
-        <button class="age-btn" onclick="selectAge(this, '45–59')">45–59</button>
-        <button class="age-btn" onclick="selectAge(this, '60+')">60+</button>
-        <button class="age-btn" onclick="selectAge(this, 'Prefer not')">—</button>
-      </div>
-    </div>
-
-    <button class="btn-primary" id="btn-bio-next" onclick="goToStep3()" disabled>Continue</button>
+    <button class="btn-primary" id="btn-cat-next" onclick="goToStep(3)" disabled>See my receipt</button>
     <button class="btn-ghost" onclick="goToStep(1)">← Back</button>
   </div>
 
   <!-- Step 3: Receipt + print -->
   <div class="screen" id="screen-receipt">
-    <p class="screen-label">03 / 03 — Your data receipt</p>
+    <p class="screen-label">Your data receipt</p>
     <h2>Ready to print.</h2>
-    <p class="screen-desc">Review your personalised receipt below, then connect the printer.</p>
+    <p class="screen-desc">Review your receipt below, then connect the printer.</p>
 
-    <div class="receipt-preview" id="receipt-preview">
-      <!-- filled by JS -->
-    </div>
+    <div class="receipt-preview" id="receipt-preview"></div>
 
     <button class="btn-primary" id="btn-print" onclick="printReceipt()">
-      ⬡ Connect USB printer &amp; print
+      Connect printer &amp; print
     </button>
     <button class="btn-ghost" onclick="goToStep(2)">← Back</button>
     <div id="print-status"></div>
@@ -460,7 +377,7 @@
     <p class="screen-label">Complete</p>
     <h2>Your receipt is printing.</h2>
     <div class="hairline"></div>
-    <p class="screen-desc" style="margin-bottom: 40px;">The gender data gap is real. Your awareness is the first step.</p>
+    <p class="screen-desc" style="margin-bottom: 36px;">The gender data gap is real. Your awareness is the first step.</p>
     <button class="btn-primary" onclick="resetAll()">Start over</button>
   </div>
 
@@ -468,47 +385,94 @@
 
 <script>
 // ── State ──────────────────────────────────────────────────────────────────
-const state = { name: '', dob: '', sex: '', age: '' };
+const state = { name: '', dob: '', category: null };
 
-// ── Health data facts keyed by sex + age bracket ───────────────────────────
-const facts = {
-  female: {
-    '13–17': 'Menstrual cycle irregularity is common in the first 2–3 years after menarche. This is physiologically normal, not a disorder.',
-    '18–29': 'Women aged 18–29 are statistically the most under-represented group in cardiovascular clinical trials, despite being the highest risk decade for autoimmune disease onset.',
-    '30–44': 'Endometriosis affects approximately 1 in 10 people who menstruate. Average time from first symptom to diagnosis: 7–9 years.',
-    '45–59': 'Perimenopausal symptoms often go unrecognised in clinical settings. Only 20% of UK medical schools include menopause as a required curriculum topic.',
-    '60+':   'Post-menopausal women represent the fastest-growing group for osteoporosis-related fractures, yet bone density screening remains inconsistently offered.',
-    'Prefer not': 'The gender data gap in medicine means that drug dosages, symptom profiles, and diagnostic criteria have historically been based on male study populations.'
+// ── Categories & facts ─────────────────────────────────────────────────────
+const categories = [
+  {
+    id: 'training',
+    title: 'Training Data\n& Life Phases',
+    shortTitle: 'Training Data & Life Phases',
+    fact: `Out of 5,261 sport and exercise science studies, women represent only 34% of total participants — and just 6% of studies focus exclusively on female bodies. For women in midlife and beyond, the data gap is even more pronounced and remains largely undocumented.`
   },
-  male: {
-    '13–17': 'Male adolescents are significantly less likely to seek medical help for mental health symptoms — a disparity linked to socialisation norms rather than lower prevalence.',
-    '18–29': 'Testicular cancer peaks between 15–35 years. It is among the most treatable cancers when caught early, yet self-examination is rarely discussed in routine care.',
-    '30–44': 'Male patients are more likely to present to emergency care in later disease stages due to lower rates of routine preventive screening in this age group.',
-    '45–59': 'Cardiovascular disease risk rises significantly from mid-40s in men. Cholesterol and blood pressure are the most actionable early indicators.',
-    '60+':   'Prostate-specific antigen (PSA) screening remains contested — it reduces mortality but carries high false-positive rates that lead to unnecessary interventions.',
-    'Prefer not': 'Biological sex influences drug metabolism, symptom expression, and disease progression — yet many clinical guidelines remain effectively sex-neutral.'
+  {
+    id: 'performance',
+    title: 'Performance\nConditions',
+    shortTitle: 'Performance Conditions',
+    fact: `In exercise thermoregulation research — the science of how the body regulates heat during physical activity — women have represented only about 12–18% of study participants per year. What is considered a "normal" response to heat and exertion is based almost entirely on male data.`
   },
-  other: {
-    '13–17': 'Trans and non-binary adolescents face significant gaps in gender-affirming healthcare access, with wait times for specialist referrals averaging 2–4 years in many EU countries.',
-    '18–29': 'Gender-diverse individuals report higher rates of delayed or withheld care due to provider inexperience — a structural gap, not a patient behaviour gap.',
-    '30–44': 'Hormone therapy in trans individuals affects cardiovascular and bone density markers. Long-term monitoring protocols are still being standardised across clinical settings.',
-    '45–59': 'Non-binary and intersex bodies remain almost entirely absent from clinical trial data, meaning evidence-based recommendations are rarely directly applicable.',
-    '60+':   'Older trans individuals came of age before legal gender recognition existed in most countries. Their healthcare histories are often fragmented and under-documented.',
-    'Prefer not': 'The gender data gap extends beyond male/female binaries. Research on intersex variations, non-binary health needs, and gender-diverse ageing remains in early stages.'
+  {
+    id: 'nutrition',
+    title: 'Sports Nutrition\nData',
+    shortTitle: 'Sports Nutrition Data',
+    fact: `Only 2.1% of the approximately 4,000 sports nutrition products on the market are specifically formulated for women. Most high-carbohydrate energy gels are sold as "unisex," while female-specific tolerance data — mapped against cycle phase, hormonal status, or life stage — is rarely collected. In endurance sport, gastrointestinal symptoms are reported by up to 37–89% of athletes during long-distance events, yet the female body remains largely excluded from the research that could explain why.`
   },
-  default: {
-    'Prefer not': 'The gender data gap in medicine is a documented structural inequality. Many diagnostic criteria, drug trials, and treatment guidelines were built on predominantly male data.',
-    default:      'Across all demographics, the single strongest predictor of health outcome is access — to information, to diagnostic tools, and to providers who recognise your symptoms.'
+  {
+    id: 'injury',
+    title: 'Injury Prevention\nData',
+    shortTitle: 'Injury Prevention Data',
+    fact: `Women face a two- to threefold higher risk of ACL injuries than men. Yet prevention programmes, diagnostic criteria, and rehabilitation protocols still rely primarily on data gathered from male athletes. The female body is treated as a variation of the male norm — rather than a different system that deserves its own research.`
+  },
+  {
+    id: 'energy',
+    title: 'Energy &\nRecovery',
+    shortTitle: 'Energy & Recovery',
+    fact: `Low energy availability can disrupt the menstrual cycle, suppress estrogen, reduce bone density, and increase the risk of stress fractures and osteoporosis. It can also affect immunity, sleep, coordination, and mental health. Among female endurance runners, rates of the Female Athlete Triad — a combination of low energy, menstrual disruption, and weakened bones — are estimated as high as 75%.`
+  },
+  {
+    id: 'myths',
+    title: 'Myths About\nFemale Bodies',
+    shortTitle: 'Myths About Female Bodies',
+    fact: `In the late 1960s, women in Germany were losing their jobs because it was believed that menstruating women secreted a toxic substance called "menotoxin." They were excluded from photo and X-ray laboratories, butcher shops, and blood donation centres — on the grounds that their blood was destructive. These were not fringe beliefs. They were accepted institutional policy.`
+  },
+  {
+    id: 'rights',
+    title: 'Reproductive\nRights',
+    shortTitle: 'Reproductive Rights',
+    fact: `Around 40% of women worldwide live in countries with restrictive abortion laws. The World Health Organization estimates that 39,000 women and girls die each year from the consequences of unsafe abortions — deaths that are almost entirely preventable. Reproductive rights are not a personal issue. They are a public health crisis.`
+  },
+  {
+    id: 'medicine',
+    title: 'Medicine for\nFemale Bodies',
+    shortTitle: 'Medicine for Female Bodies',
+    fact: `For many years, women were systematically excluded from clinical drug trials. In the United States, this practice was formalised in the early 1970s under the justification that hormonal variability made female bodies methodologically inconvenient. The result: medications were tested on male bodies and then prescribed to bodies that had never been included in the research at all.`
+  },
+  {
+    id: 'economy',
+    title: 'Economic\nData',
+    shortTitle: 'Economic Data',
+    fact: `By 2040, the women's health gap is projected to cause around 75 million years of healthy life lost per year. Closing this gap could boost the global economy by up to one trillion dollars annually and bring an estimated 137 million more women into employment — potentially lifting many out of poverty. The gender data gap is not only a health issue. It is an economic one.`
+  },
+  {
+    id: 'gyn',
+    title: 'Gynecological\nDiseases',
+    shortTitle: 'Gynecological Diseases',
+    fact: `67% of women in Germany report suffering from menstrual pain. Conditions such as endometriosis and PCOS can take an average of ten years to receive a diagnosis — years marked by dismissed symptoms, inconclusive tests, and the quiet suggestion that the pain might not be real. The delay is not a medical mystery. It is a consequence of decades of under-research.`
   }
-};
+];
 
-function getFact() {
-  const s = state.sex || 'default';
-  const a = state.age || 'Prefer not';
-  if (facts[s] && facts[s][a]) return facts[s][a];
-  if (facts[s] && facts[s]['Prefer not']) return facts[s]['Prefer not'];
-  return facts.default[a] || facts.default.default;
+// ── Build category grid ────────────────────────────────────────────────────
+const grid = document.getElementById('cat-grid');
+categories.forEach((cat, i) => {
+  const card = document.createElement('div');
+  card.className = 'cat-card';
+  card.innerHTML = `
+    <span class="cat-num">0${i + 1}</span>
+    <span class="cat-title">${cat.title.replace('\n', '<br>')}</span>
+  `;
+  card.addEventListener('click', () => selectCategory(card, cat.id));
+  grid.appendChild(card);
+});
+
+function selectCategory(el, id) {
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.category = id;
+  document.getElementById('btn-cat-next').disabled = false;
 }
+
+// ── Date input max ─────────────────────────────────────────────────────────
+document.getElementById('input-dob').max = new Date().toISOString().split('T')[0];
 
 // ── Progress ───────────────────────────────────────────────────────────────
 function setProgress(pct) {
@@ -516,166 +480,139 @@ function setProgress(pct) {
 }
 
 // ── Step navigation ────────────────────────────────────────────────────────
+const screenIds = ['screen-name', 'screen-category', 'screen-receipt', 'screen-done'];
+const progressPcts = [0, 40, 80, 100];
+
 function goToStep(n) {
+  if (n === 3) {
+    state.name = document.getElementById('input-name').value.trim();
+    state.dob  = document.getElementById('input-dob').value;
+    buildReceipt();
+  }
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const screens = ['screen-name', 'screen-bio', 'screen-receipt', 'screen-done'];
-  document.getElementById(screens[n - 1]).classList.add('active');
-  setProgress([0, 33, 66, 100][n - 1]);
+  document.getElementById(screenIds[n - 1]).classList.add('active');
+  setProgress(progressPcts[n - 1]);
   window.scrollTo(0, 0);
 }
 
-function goToStep2() {
-  state.name = document.getElementById('input-name').value.trim();
-  if (!state.name) return;
-  goToStep(2);
-}
-
-function goToStep3() {
-  state.dob = document.getElementById('input-dob').value;
-  if (!state.sex) return;
-  buildReceipt();
-  goToStep(3);
-}
-
-// ── Name input validation ──────────────────────────────────────────────────
-document.getElementById('input-name').addEventListener('input', function() {
-  document.getElementById('btn-name-next').disabled = this.value.trim().length < 1;
-});
-document.getElementById('input-name').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') goToStep2();
-});
-
-// Set max date on DOB to today
-document.getElementById('input-dob').max = new Date().toISOString().split('T')[0];
-
-// ── Sex / age selection ────────────────────────────────────────────────────
-function selectSex(el, val) {
-  document.querySelectorAll('#screen-bio .option-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  state.sex = val;
-  checkBioStep();
-}
-
-function selectAge(el, val) {
-  document.querySelectorAll('.age-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
-  state.age = val;
-  checkBioStep();
-}
-
-function checkBioStep() {
-  document.getElementById('btn-bio-next').disabled = !state.sex;
-}
-
-// ── Receipt builder ────────────────────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────────────────
 function formatDob(val) {
-  if (!val) return '—';
+  if (!val) return null;
   const [y, m, d] = val.split('-');
   return `${d}.${m}.${y}`;
 }
 
-function buildReceipt() {
-  const now = new Date();
-  const ts = now.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' })
-    + ' ' + now.toLocaleTimeString('de-DE', { hour:'2-digit', minute:'2-digit' });
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-  const sexLabel = { female: 'Female', male: 'Male', other: 'Other / prefer not to specify' }[state.sex] || '—';
-  const ageLabel = state.age || '—';
-  const fact = getFact();
+function getCat() {
+  return categories.find(c => c.id === state.category);
+}
+
+// ── Receipt preview ────────────────────────────────────────────────────────
+function buildReceipt() {
+  const cat  = getCat();
+  const now  = new Date();
+  const date = now.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' });
+  const dob  = formatDob(state.dob);
+
+  let rows = '';
+  if (state.name) rows += `<div class="receipt-line"><span class="rl">Name</span><span class="rv">${escHtml(state.name)}</span></div>`;
+  if (dob)        rows += `<div class="receipt-line"><span class="rl">Birthday</span><span class="rv">${dob}</span></div>`;
+  if (rows)       rows += `<hr class="receipt-divider">`;
 
   document.getElementById('receipt-preview').innerHTML = `
-    <div class="receipt-line"><span class="rl">Name</span><span class="rv">${escHtml(state.name)}</span></div>
-    <div class="receipt-line"><span class="rl">Date of birth</span><span class="rv">${formatDob(state.dob)}</span></div>
+    ${rows}
+    <span class="receipt-cat-label">Topic</span>
+    <div class="receipt-line"><span class="rv" style="text-align:left">${escHtml(cat.shortTitle)}</span></div>
     <hr class="receipt-divider">
-    <div class="receipt-line"><span class="rl">Biological sex</span><span class="rv">${sexLabel}</span></div>
-    <div class="receipt-line"><span class="rl">Age group</span><span class="rv">${ageLabel}</span></div>
-    <hr class="receipt-divider">
-    <div class="receipt-fact">
-      <span class="receipt-fact-label">Data point for you</span>
-      ${escHtml(fact)}
-    </div>
-    <div class="receipt-footer">Awareness Station · ${ts}</div>
+    <span class="receipt-cat-label">Data point</span>
+    <div class="receipt-fact-text">${escHtml(cat.fact)}</div>
+    <div class="receipt-footer">Gender Data Gap Awareness Station · ${date}</div>
   `;
 }
 
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── ESC/POS receipt bytes ──────────────────────────────────────────────────
+// ── ESC/POS receipt builder ────────────────────────────────────────────────
 function buildEscPos() {
   const enc = new TextEncoder();
-  const lines = [];
+  const cat = getCat();
+  const now = new Date();
+  const date = now.toLocaleDateString('de-DE');
+  const WIDTH = 32;
 
-  const esc = (bytes) => bytes;
-  const text = (s) => enc.encode(s);
-  const nl = () => enc.encode('\n');
-
-  // Helper: pad to 32 chars (58mm printer = 32 chars wide at 12cpi)
-  function centre(s, width = 32) {
-    s = String(s).substring(0, width);
-    const pad = Math.max(0, Math.floor((width - s.length) / 2));
-    return ' '.repeat(pad) + s;
+  function centre(s) {
+    s = String(s).substring(0, WIDTH);
+    const pad = Math.floor((WIDTH - s.length) / 2);
+    return ' '.repeat(Math.max(0, pad)) + s;
   }
-  function row(left, right, width = 32) {
-    left = String(left).substring(0, width - right.length - 1);
-    const gap = width - left.length - right.length;
+
+  function row(left, right) {
+    left = String(left).substring(0, WIDTH - String(right).length - 1);
+    const gap = WIDTH - left.length - String(right).length;
     return left + ' '.repeat(Math.max(1, gap)) + right;
   }
 
-  const ESC_INIT    = [0x1B, 0x40];
-  const BOLD_ON     = [0x1B, 0x45, 0x01];
-  const BOLD_OFF    = [0x1B, 0x45, 0x00];
-  const ALIGN_C     = [0x1B, 0x61, 0x01];
-  const ALIGN_L     = [0x1B, 0x61, 0x00];
-  const CUT         = [0x1D, 0x56, 0x42, 0x00];
+  function wrap(text, width) {
+    const words = String(text).split(' ');
+    const lines = [];
+    let line = '';
+    for (const w of words) {
+      if ((line + ' ' + w).trim().length > width) {
+        if (line) lines.push(line.trim());
+        line = w;
+      } else {
+        line = (line + ' ' + w).trim();
+      }
+    }
+    if (line) lines.push(line.trim());
+    return lines;
+  }
 
-  const now = new Date();
-  const ts = now.toLocaleDateString('de-DE') + ' ' + now.toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
-  const sexLabel = { female: 'Female', male: 'Male', other: 'Other' }[state.sex] || '-';
+  const ESC_INIT = [0x1B, 0x40];
+  const BOLD_ON  = [0x1B, 0x45, 0x01];
+  const BOLD_OFF = [0x1B, 0x45, 0x00];
+  const ALIGN_C  = [0x1B, 0x61, 0x01];
+  const ALIGN_L  = [0x1B, 0x61, 0x00];
+  const CUT      = [0x1D, 0x56, 0x42, 0x00];
+  const DIV      = '--------------------------------';
 
   const chunks = [
     new Uint8Array(ESC_INIT),
     new Uint8Array(ALIGN_C),
     new Uint8Array(BOLD_ON),
-    text('GENDER DATA GAP\n'),
+    enc.encode('GENDER DATA GAP\n'),
     new Uint8Array(BOLD_OFF),
-    text('Awareness Station\n'),
-    text('--------------------------------\n'),
+    enc.encode('Awareness Station\n'),
+    enc.encode(DIV + '\n'),
     new Uint8Array(ALIGN_L),
-    text(row('Name', state.name) + '\n'),
-    text(row('Date of birth', formatDob(state.dob)) + '\n'),
-    text('--------------------------------\n'),
-    text(row('Biological sex', sexLabel) + '\n'),
-    text(row('Age group', state.age || '-') + '\n'),
-    text('--------------------------------\n'),
-    new Uint8Array(BOLD_ON),
-    text('DATA POINT FOR YOU\n'),
-    new Uint8Array(BOLD_OFF),
   ];
 
-  // Word-wrap the fact to 32 chars
-  const fact = getFact();
-  const words = fact.split(' ');
-  let line = '';
-  for (const w of words) {
-    if ((line + ' ' + w).trim().length > 32) {
-      chunks.push(text(line.trim() + '\n'));
-      line = w;
-    } else {
-      line = (line + ' ' + w).trim();
-    }
-  }
-  if (line) chunks.push(text(line + '\n'));
+  if (state.name) chunks.push(enc.encode(row('Name', state.name) + '\n'));
+  const dob = formatDob(state.dob);
+  if (dob) chunks.push(enc.encode(row('Birthday', dob) + '\n'));
+  if (state.name || dob) chunks.push(enc.encode(DIV + '\n'));
 
-  chunks.push(
-    text('--------------------------------\n'),
-    new Uint8Array(ALIGN_C),
-    text(ts + '\n'),
-    text('ninacaterina.github.io/Gender-Data-Gap\n'),
-    text('\n\n\n'),
-    new Uint8Array(CUT)
-  );
+  chunks.push(new Uint8Array(BOLD_ON));
+  chunks.push(enc.encode('TOPIC\n'));
+  chunks.push(new Uint8Array(BOLD_OFF));
+  chunks.push(enc.encode(cat.shortTitle + '\n'));
+  chunks.push(enc.encode(DIV + '\n'));
+
+  chunks.push(new Uint8Array(BOLD_ON));
+  chunks.push(enc.encode('DATA POINT\n'));
+  chunks.push(new Uint8Array(BOLD_OFF));
+
+  const factLines = wrap(cat.fact, WIDTH);
+  for (const l of factLines) chunks.push(enc.encode(l + '\n'));
+
+  chunks.push(enc.encode(DIV + '\n'));
+  chunks.push(new Uint8Array(ALIGN_C));
+  chunks.push(enc.encode(date + '\n'));
+  chunks.push(enc.encode('\n\n\n'));
+  chunks.push(new Uint8Array(CUT));
 
   const total = chunks.reduce((s, c) => s + c.length, 0);
   const out = new Uint8Array(total);
@@ -684,7 +621,7 @@ function buildEscPos() {
   return out;
 }
 
-// ── WebUSB print (AnJet58 / generic ESC/POS USB) ───────────────────────────
+// ── WebUSB print ───────────────────────────────────────────────────────────
 let usbDevice = null;
 
 async function printReceipt() {
@@ -693,7 +630,7 @@ async function printReceipt() {
 
   if (!navigator.usb) {
     status.className = 'error';
-    status.textContent = 'WebUSB not available — open this page in Chrome or Edge on your laptop.';
+    status.textContent = 'WebUSB not available — open this page in Chrome on your laptop.';
     return;
   }
 
@@ -701,32 +638,24 @@ async function printReceipt() {
   status.className = '';
 
   try {
-    // Ask user to pick the printer if not already paired
     if (!usbDevice || !usbDevice.opened) {
-      status.textContent = 'Select your AnJet58 printer in the popup…';
-      usbDevice = await navigator.usb.requestDevice({
-        filters: [] // show all USB devices — select the AnJet58 from the list
-      });
+      status.textContent = 'Select your printer in the popup…';
+      usbDevice = await navigator.usb.requestDevice({ filters: [] });
     }
 
     status.textContent = 'Connecting…';
     if (!usbDevice.opened) await usbDevice.open();
-
-    // Select configuration and claim interface
     if (usbDevice.configuration === null) await usbDevice.selectConfiguration(1);
     await usbDevice.claimInterface(0);
 
-    // Find the bulk-out endpoint (where we send print data)
-    const iface = usbDevice.configuration.interfaces[0];
-    const altIface = iface.alternates[0];
-    const endpoint = altIface.endpoints.find(e => e.direction === 'out' && e.type === 'bulk');
+    const endpoint = usbDevice.configuration.interfaces[0]
+      .alternates[0].endpoints
+      .find(e => e.direction === 'out' && e.type === 'bulk');
 
-    if (!endpoint) throw new Error('No bulk-out endpoint found on this printer.');
+    if (!endpoint) throw new Error('No bulk-out endpoint found.');
 
     status.textContent = 'Printing…';
     const data = buildEscPos();
-
-    // Send in chunks
     const chunkSize = 64;
     for (let i = 0; i < data.length; i += chunkSize) {
       await usbDevice.transferOut(endpoint.endpointNumber, data.slice(i, i + chunkSize));
@@ -742,9 +671,7 @@ async function printReceipt() {
     btn.disabled = false;
     status.className = 'error';
     if (err.name === 'NotFoundError' || err.name === 'AbortError') {
-      status.textContent = 'No printer selected. Try again and pick the AnJet58 from the list.';
-    } else if (err.message.includes('Access denied') || err.name === 'SecurityError') {
-      status.textContent = 'USB access denied — make sure you\'re on HTTPS or localhost.';
+      status.textContent = 'No printer selected. Try again.';
     } else {
       status.textContent = 'Error: ' + err.message;
     }
@@ -753,12 +680,11 @@ async function printReceipt() {
 
 // ── Reset ──────────────────────────────────────────────────────────────────
 function resetAll() {
-  state.name = ''; state.dob = ''; state.sex = ''; state.age = '';
+  state.name = ''; state.dob = ''; state.category = null;
   document.getElementById('input-name').value = '';
   document.getElementById('input-dob').value = '';
-  document.getElementById('btn-name-next').disabled = true;
-  document.getElementById('btn-bio-next').disabled = true;
-  document.querySelectorAll('.option-card, .age-btn').forEach(el => el.classList.remove('selected'));
+  document.getElementById('btn-cat-next').disabled = true;
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
   document.getElementById('print-status').textContent = '';
   document.getElementById('btn-print').disabled = false;
   goToStep(1);
