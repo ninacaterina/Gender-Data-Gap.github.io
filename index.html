@@ -624,57 +624,33 @@ function buildEscPos() {
 
 // ── Browser print ─────────────────────────────────────────────────────────
 function printReceipt() {
-  // Build a minimal print-only page with the receipt content
   const lines = buildReceiptLines();
-  const text  = lines.join('
-');
+  const text  = escapeHtml(lines.join('\n'));
+
+  const html = [
+    '<!DOCTYPE html><html><head><meta charset="UTF-8">',
+    '<title>Female Data Layer Receipt</title>',
+    '<style>',
+    '@page { size: 58mm auto; margin: 4mm 3mm; }',
+    '* { margin:0; padding:0; box-sizing:border-box; }',
+    'body { font-family: "Courier New", monospace; font-size: 9pt; line-height: 1.6; color: #000; background: #fff; width: 52mm; }',
+    'pre { white-space: pre-wrap; word-break: break-word; font-size: 9pt; }',
+    '</style></head><body>',
+    '<pre>' + text + '</pre>',
+    '</body></html>'
+  ].join('');
 
   const printWin = window.open('', '_blank', 'width=300,height=600');
-  printWin.document.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset="UTF-8">
-    <title>Female Data Layer Receipt</title>
-    <style>
-      @page {
-        size: 58mm auto;
-        margin: 4mm 3mm;
-      }
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body {
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 9pt;
-        line-height: 1.6;
-        color: #000;
-        background: #fff;
-        width: 52mm;
-      }
-      pre {
-        white-space: pre-wrap;
-        word-break: break-word;
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 9pt;
-      }
-      .bold { font-weight: bold; }
-    </style>
-    </head>
-    <body>
-    <pre>${escapeHtml(text)}</pre>
-    <script>
-      window.onload = function() {
-        window.print();
-        setTimeout(function() { window.close(); }, 1000);
-      };
-    <\/script>
-    </body>
-    </html>
-  `);
+  printWin.document.write(html);
   printWin.document.close();
+  printWin.focus();
+  setTimeout(function() {
+    printWin.print();
+    setTimeout(function() { printWin.close(); }, 1500);
+  }, 400);
 
-  setTimeout(() => goToStep(4), 2000);
+  setTimeout(function() { goToStep(4); }, 3000);
 }
-
 function escapeHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
