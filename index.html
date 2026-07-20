@@ -284,7 +284,7 @@
       <input type="date" id="input-dob" max="">
     </div>
 
-    <button class="btn-primary" onclick="goToStep(2)">Continue</button>
+    <button class="btn-primary" type="button" onclick="goToStep(2)">Continue</button>
   </div>
 
   <!-- Step 2: Category selection -->
@@ -295,8 +295,8 @@
 
     <div class="cat-grid" id="cat-grid"></div>
 
-    <button class="btn-primary" id="btn-cat-next" onclick="goToStep(3)" disabled>See my receipt</button>
-    <button class="btn-ghost" onclick="goToStep(1)">← Back</button>
+    <button class="btn-primary" type="button" id="btn-cat-next" onclick="goToStep(3)" disabled>See my receipt</button>
+    <button class="btn-ghost" type="button" onclick="goToStep(1)">← Back</button>
   </div>
 
   <!-- Step 3: Receipt + print -->
@@ -307,10 +307,10 @@
 
     <div class="receipt-preview" id="receipt-preview"></div>
 
-    <button class="btn-primary" id="btn-print" onclick="printReceipt()">
+    <button class="btn-primary" type="button" id="btn-print" onclick="printReceipt()">
       Print receipt
     </button>
-    <button class="btn-ghost" onclick="goToStep(2)">← Back</button>
+    <button class="btn-ghost" type="button" onclick="goToStep(2)">← Back</button>
     <div id="print-status"></div>
   </div>
 
@@ -321,7 +321,7 @@
     <h2>Your receipt is printing.</h2>
     <div class="hairline"></div>
     <p class="screen-desc" style="margin-bottom: 36px;">The female data gap is real. Your awareness is the first step.</p>
-    <button class="btn-primary" onclick="resetAll()">Start over</button>
+    <button class="btn-primary" type="button" onclick="resetAll()">Start over</button>
   </div>
 
 </main>
