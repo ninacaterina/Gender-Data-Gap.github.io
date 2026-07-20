@@ -80,7 +80,7 @@
 
   .screen h2 {
     font-size: 26px;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.25;
     letter-spacing: -0.02em;
     color: var(--black);
@@ -92,7 +92,7 @@
     color: var(--gray-dark);
     line-height: 1.6;
     margin-bottom: 36px;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   /* Inputs */
@@ -114,7 +114,7 @@
     padding: 14px 16px;
     font-family: var(--sans);
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--black);
     background: var(--gray-bg);
     border: 1px solid var(--gray-light);
@@ -308,7 +308,7 @@
     <div class="receipt-preview" id="receipt-preview"></div>
 
     <button class="btn-primary" id="btn-print" onclick="printReceipt()">
-      Connect printer &amp; print
+      Print receipt
     </button>
     <button class="btn-ghost" onclick="goToStep(2)">← Back</button>
     <div id="print-status"></div>
@@ -622,61 +622,61 @@ function buildEscPos() {
   return out;
 }
 
-// ── WebUSB print ───────────────────────────────────────────────────────────
-let usbDevice = null;
+// ── Browser print ─────────────────────────────────────────────────────────
+function printReceipt() {
+  // Build a minimal print-only page with the receipt content
+  const lines = buildReceiptLines();
+  const text  = lines.join('
+');
 
-async function printReceipt() {
-  const status = document.getElementById('print-status');
-  const btn    = document.getElementById('btn-print');
+  const printWin = window.open('', '_blank', 'width=300,height=600');
+  printWin.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>Female Data Layer Receipt</title>
+    <style>
+      @page {
+        size: 58mm auto;
+        margin: 4mm 3mm;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: #000;
+        background: #fff;
+        width: 52mm;
+      }
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 9pt;
+      }
+      .bold { font-weight: bold; }
+    </style>
+    </head>
+    <body>
+    <pre>${escapeHtml(text)}</pre>
+    <script>
+      window.onload = function() {
+        window.print();
+        setTimeout(function() { window.close(); }, 1000);
+      };
+    <\/script>
+    </body>
+    </html>
+  `);
+  printWin.document.close();
 
-  if (!navigator.usb) {
-    status.className = 'error';
-    status.textContent = 'WebUSB not available — open this page in Chrome on your laptop.';
-    return;
-  }
+  setTimeout(() => goToStep(4), 2000);
+}
 
-  btn.disabled = true;
-  status.className = '';
-
-  try {
-    if (!usbDevice || !usbDevice.opened) {
-      status.textContent = 'Select your printer in the popup…';
-      usbDevice = await navigator.usb.requestDevice({ filters: [] });
-    }
-
-    status.textContent = 'Connecting…';
-    if (!usbDevice.opened) await usbDevice.open();
-    if (usbDevice.configuration === null) await usbDevice.selectConfiguration(1);
-    await usbDevice.claimInterface(0);
-
-    const endpoint = usbDevice.configuration.interfaces[0]
-      .alternates[0].endpoints
-      .find(e => e.direction === 'out' && e.type === 'bulk');
-
-    if (!endpoint) throw new Error('No bulk-out endpoint found.');
-
-    status.textContent = 'Printing…';
-    const data = buildEscPos();
-    const chunkSize = 64;
-    for (let i = 0; i < data.length; i += chunkSize) {
-      await usbDevice.transferOut(endpoint.endpointNumber, data.slice(i, i + chunkSize));
-      await new Promise(r => setTimeout(r, 20));
-    }
-
-    await usbDevice.releaseInterface(0);
-    status.className = 'ok';
-    status.textContent = '✓ Sent to printer.';
-    setTimeout(() => goToStep(4), 1200);
-
-  } catch (err) {
-    btn.disabled = false;
-    status.className = 'error';
-    if (err.name === 'NotFoundError' || err.name === 'AbortError') {
-      status.textContent = 'No printer selected. Try again.';
-    } else {
-      status.textContent = 'Error: ' + err.message;
-    }
-  }
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 // ── Reset ──────────────────────────────────────────────────────────────────
