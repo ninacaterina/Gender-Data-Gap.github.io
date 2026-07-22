@@ -622,34 +622,61 @@ function buildEscPos() {
   return out;
 }
 
-// ── Browser print ─────────────────────────────────────────────────────────
-function printReceipt() {
-  const lines = buildReceiptLines();
-  const text  = escapeHtml(lines.join('\n'));
+// ── WebUSB direct print ────────────────────────────────────────────────────
+let usbDevice = null;
 
-  const html = [
-    '<!DOCTYPE html><html><head><meta charset="UTF-8">',
-    '<title>Female Data Layer Receipt</title>',
-    '<style>',
-    '@page { size: 58mm auto; margin: 4mm 3mm; }',
-    '* { margin:0; padding:0; box-sizing:border-box; }',
-    'body { font-family: "Courier New", monospace; font-size: 9pt; line-height: 1.6; color: #000; background: #fff; width: 52mm; }',
-    'pre { white-space: pre-wrap; word-break: break-word; font-size: 9pt; }',
-    '</style></head><body>',
-    '<pre>' + text + '</pre>',
-    '</body></html>'
-  ].join('');
+async function printReceipt() {
+  const status = document.getElementById('print-status');
+  const btn    = document.getElementById('btn-print');
 
-  const printWin = window.open('', '_blank', 'width=300,height=600');
-  printWin.document.write(html);
-  printWin.document.close();
-  printWin.focus();
-  setTimeout(function() {
-    printWin.print();
-    setTimeout(function() { printWin.close(); }, 1500);
-  }, 400);
+  if (!navigator.usb) {
+    status.className = 'error';
+    status.textContent = 'WebUSB not available — open this page in Chrome.';
+    return;
+  }
 
-  setTimeout(function() { goToStep(4); }, 3000);
+  btn.disabled = true;
+  status.className = '';
+
+  try {
+    if (!usbDevice || !usbDevice.opened) {
+      status.textContent = 'Select your printer in the popup…';
+      usbDevice = await navigator.usb.requestDevice({ filters: [] });
+    }
+
+    status.textContent = 'Connecting…';
+    if (!usbDevice.opened) await usbDevice.open();
+    if (usbDevice.configuration === null) await usbDevice.selectConfiguration(1);
+    await usbDevice.claimInterface(0);
+
+    const endpoint = usbDevice.configuration.interfaces[0]
+      .alternates[0].endpoints
+      .find(e => e.direction === 'out' && e.type === 'bulk');
+
+    if (!endpoint) throw new Error('No bulk-out endpoint found.');
+
+    status.textContent = 'Printing…';
+    const data = buildEscPos();
+    const chunkSize = 64;
+    for (let i = 0; i < data.length; i += chunkSize) {
+      await usbDevice.transferOut(endpoint.endpointNumber, data.slice(i, i + chunkSize));
+      await new Promise(r => setTimeout(r, 20));
+    }
+
+    await usbDevice.releaseInterface(0);
+    status.className = 'ok';
+    status.textContent = '✓ Sent to printer.';
+    setTimeout(function() { goToStep(4); }, 1200);
+
+  } catch (err) {
+    btn.disabled = false;
+    status.className = 'error';
+    if (err.name === 'NotFoundError' || err.name === 'AbortError') {
+      status.textContent = 'No printer selected. Try again.';
+    } else {
+      status.textContent = 'Error: ' + err.message;
+    }
+  }
 }
 function escapeHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
