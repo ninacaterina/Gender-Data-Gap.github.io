@@ -8,14 +8,14 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --green: #5db191;
-    --green-dark: #3d8a6e;
-    --black: #1A1A1A;
-    --gray-dark: #555;
-    --gray-mid: #999;
-    --gray-light: #E8E8E8;
-    --gray-bg: #F7F7F7;
-    --white: #FFFFFF;
+    --green: #c2ff02;
+    --green-dark: #a8dc00;
+    --black: #ffffff;
+    --gray-dark: #cccccc;
+    --gray-mid: #9999cc;
+    --gray-light: #2d00cc;
+    --gray-bg: #1a0089;
+    --white: #1a0089;
     --radius: 2px;
     --mono: ui-monospace, 'SF Mono', 'Menlo', monospace;
     --sans: 'Avenir Next', 'Avenir', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -23,7 +23,7 @@
 
   html, body {
     min-height: 100%;
-    background: var(--white);
+    background: #1a0089;
     color: var(--black);
     font-family: var(--sans);
     -webkit-font-smoothing: antialiased;
@@ -35,7 +35,7 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: var(--gray-light);
+    background: #2d00cc;
     z-index: 100;
   }
   #progress-fill {
@@ -116,8 +116,8 @@
     font-size: 18px;
     font-weight: 400;
     color: var(--black);
-    background: var(--gray-bg);
-    border: 1px solid var(--gray-light);
+    background: #2a00cc;
+    border: 1px solid #4400ff;
     border-radius: var(--radius);
     outline: none;
     transition: border-color 0.2s;
@@ -126,9 +126,9 @@
   input[type="text"]:focus,
   input[type="date"]:focus {
     border-color: var(--green);
-    background: var(--white);
+    background: #1a0089;
   }
-  input::placeholder { color: var(--gray-mid); }
+  input::placeholder { color: #7f7fe3; }
 
   /* Category grid */
   .cat-grid {
@@ -140,8 +140,8 @@
 
   .cat-card {
     padding: 16px 14px;
-    background: var(--gray-bg);
-    border: 1px solid var(--gray-light);
+    background: #2a00cc;
+    border: 1px solid #4400ff;
     border-radius: var(--radius);
     cursor: pointer;
     transition: border-color 0.15s, background 0.15s;
@@ -168,7 +168,7 @@
 
   .cat-card.selected {
     border-color: var(--green);
-    background: var(--white);
+    background: #1a0089;
   }
   .cat-card.selected .cat-title { color: var(--green); }
   .cat-card.selected .cat-num   { color: var(--green); }
@@ -191,7 +191,7 @@
   }
   .btn-primary:active { background: var(--green-dark); }
   .btn-primary:disabled {
-    background: var(--gray-light);
+    background: #2d00cc;
     color: var(--gray-mid);
     cursor: not-allowed;
   }
@@ -215,7 +215,7 @@
 
   /* Receipt preview — monospaced to match printed output */
   .receipt-preview {
-    background: var(--white);
+    background: #1a0089;
     border: 1px solid var(--gray-light);
     border-radius: var(--radius);
     padding: 22px 20px;
@@ -223,7 +223,7 @@
     font-family: var(--mono);
     font-size: 11px;
     line-height: 1.7;
-    color: var(--black);
+    color: #1a0089;
     white-space: pre-wrap;
     word-break: break-word;
   }
